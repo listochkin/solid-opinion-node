@@ -25,3 +25,11 @@
         - routing
           - handler
   ```
+
+  - http://jsonapi.org/implementations/
+
+### Misc
+
+  - Emmet / Zen Coding
+  - editorconfig
+  - https://samsaffron.com/archive/2015/12/29/websockets-caution-required
