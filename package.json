@@ -1,0 +1,25 @@
+{
+  "name": "solid-opinion-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test --recursive",
+    "watch": "mocha test --recursive --watch --reporter=min --growl"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/listochkin/solid-opinion-node.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/listochkin/solid-opinion-node/issues"
+  },
+  "homepage": "https://github.com/listochkin/solid-opinion-node#readme",
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "istanbul": "^0.4.1",
+    "mocha": "^2.3.4"
+  }
+}
