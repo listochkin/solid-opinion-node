@@ -25,6 +25,7 @@
   "dependencies": {
     "co": "^4.6.0",
     "jsonapi-server": "^1.0.5",
-    "node-fetch": "^1.3.3"
+    "node-fetch": "^1.3.3",
+    "oauth2-server": "^2.4.1"
   }
 }
