@@ -16,18 +16,30 @@ describe('authentication', () => {
   it('should log in with username and password', co.wrap(function* () {
     const loginRes = yield fetch(rootUrl + '/oauth/token', {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
       body: stringify({
-        username: 'test-user',
-        password: 'secret'
+        grant_type: 'password',
+        client_id: 'webapp',
+        client_secret: 'secret',
+
+        username: 'test_user',
+        password: 'test_password'
       })
     });
     assert.equal(loginRes.status, 200);
-    assert.fail('not implemented');
+
+    const loginJson = yield loginRes.json();
+    assert.isNotNull(loginJson.access_token);
+    assert.equal(loginJson.token_type, 'bearer');
   }));
 
   before(() => {
     auth.listen(port);
   });
 
-  after(() => auth.close());
+  after(() => {
+    auth.close();
+  });
 });

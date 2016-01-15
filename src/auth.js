@@ -30,4 +30,9 @@ app.get('/', app.oauth.authorise(), function (req, res) {
 
 app.use(app.oauth.errorHandler());
 
-module.exports = http.createServer(app);
+const server = http.createServer(app);
+server.on('close', () => {
+  mongoose.disconnect();
+});
+
+module.exports = server;
