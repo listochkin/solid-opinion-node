@@ -18,8 +18,8 @@ app.use(bodyParser.json());
 
 app.oauth = oauthserver({
   model: authModel,
-  grants: ['password'],
-  debug: true
+  grants: ['password']
+  // debug: true
 });
 
 app.all('/oauth/token', app.oauth.grant());
