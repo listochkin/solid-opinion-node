@@ -1,70 +1,32 @@
 const bcrypt = require('bcryptjs');
 
-const mongoose = require('mongoose'),
-  Schema = mongoose.Schema,
-  model = module.exports;
+const authModel = module.exports;
 
-//
-// Schemas definitions
-//
-const OAuthAccessTokensSchema = new Schema({
-  accessToken: { type: String },
-  clientId: { type: String },
-  userId: { type: String },
-  expires: { type: Date }
-});
-
-const OAuthRefreshTokensSchema = new Schema({
-  refreshToken: { type: String },
-  clientId: { type: String },
-  userId: { type: String },
-  expires: { type: Date }
-});
-
-const OAuthClientsSchema = new Schema({
-  clientId: { type: String },
-  clientSecret: { type: String },
-  grantTypes: [ {type: String} ],
-  redirectUri: { type: String }
-});
-
-const OAuthUsersSchema = new Schema({
-  username: { type: String },
-  passwordHash: { type: String },
-  firstname: { type: String },
-  lastname: { type: String },
-  email: { type: String, default: '' }
-});
-
-mongoose.model('OAuthAccessTokens', OAuthAccessTokensSchema);
-mongoose.model('OAuthRefreshTokens', OAuthRefreshTokensSchema);
-mongoose.model('OAuthClients', OAuthClientsSchema);
-mongoose.model('Users', OAuthUsersSchema);
-
-const OAuthAccessTokensModel = mongoose.model('OAuthAccessTokens'),
-  OAuthRefreshTokensModel = mongoose.model('OAuthRefreshTokens'),
-  OAuthClientsModel = mongoose.model('OAuthClients'),
-  OAuthUsersModel = mongoose.model('Users');
+const mongoModels = require('./models');
+const OAuthAccessTokensModel = mongoModels.OAuthAccessTokensModel;
+const OAuthRefreshTokensModel = mongoModels.OAuthRefreshTokensModel;
+const OAuthClientsModel = mongoModels.OAuthClientsModel;
+const UsersModel = mongoModels.UsersModel;
 
 //
 // oauth2-server callbacks
 //
-model.getAccessToken = function (bearerToken, callback) {
-  console.log('in getAccessToken (bearerToken: ' + bearerToken + ')');
+authModel.getAccessToken = function (bearerToken, callback) {
+  // console.log('in getAccessToken (bearerToken: ' + bearerToken + ')');
 
   OAuthAccessTokensModel.findOne({ accessToken: bearerToken }, callback);
 };
 
-model.getClient = function (clientId, clientSecret, callback) {
-  console.log('in getClient (clientId: ' + clientId + ', clientSecret: ' + clientSecret + ')');
+authModel.getClient = function (clientId, clientSecret, callback) {
+  // console.log('in getClient (clientId: ' + clientId + ', clientSecret: ' + clientSecret + ')');
   if (clientSecret === null) {
     return OAuthClientsModel.findOne({ clientId: clientId }, callback);
   }
   OAuthClientsModel.findOne({ clientId: clientId, clientSecret: clientSecret }, callback);
 };
 
-model.grantTypeAllowed = function (clientId, grantType, callback) {
-  console.log('in grantTypeAllowed (clientId: ' + clientId + ', grantType: ' + grantType + ')');
+authModel.grantTypeAllowed = function (clientId, grantType, callback) {
+  // console.log('in grantTypeAllowed (clientId: ' + clientId + ', grantType: ' + grantType + ')');
 
   OAuthClientsModel.findOne({ clientId: clientId }, (error, client) => {
     if (error) return callback(error);
@@ -73,8 +35,8 @@ model.grantTypeAllowed = function (clientId, grantType, callback) {
   });
 };
 
-model.saveAccessToken = function (token, clientId, expires, userId, callback) {
-  console.log('in saveAccessToken (token: ' + token + ', clientId: ' + clientId + ', userId: ' + userId + ', expires: ' + expires + ')');
+authModel.saveAccessToken = function (token, clientId, expires, userId, callback) {
+  // console.log('in saveAccessToken (token: ' + token + ', clientId: ' + clientId + ', userId: ' + userId + ', expires: ' + expires + ')');
 
   const accessToken = new OAuthAccessTokensModel({
     accessToken: token,
@@ -89,10 +51,10 @@ model.saveAccessToken = function (token, clientId, expires, userId, callback) {
 /*
  * Required to support password grant type
  */
-model.getUser = function (username, password, callback) {
-  console.log('in getUser (username: ' + username + ', password: ' + password + ')');
+authModel.getUser = function (username, password, callback) {
+  // console.log('in getUser (username: ' + username + ', password: ' + password + ')');
 
-  OAuthUsersModel.findOne({ username: username }, function(err, user) {
+  UsersModel.findOne({ username: username }, function(err, user) {
     if(err) return callback(err);
 
     if (bcrypt.compareSync(password, user.passwordHash)) {
@@ -106,8 +68,8 @@ model.getUser = function (username, password, callback) {
 /*
  * Required to support refreshToken grant type
  */
-model.saveRefreshToken = function (token, clientId, expires, userId, callback) {
-  console.log('in saveRefreshToken (token: ' + token + ', clientId: ' + clientId +', userId: ' + userId + ', expires: ' + expires + ')');
+authModel.saveRefreshToken = function (token, clientId, expires, userId, callback) {
+  // console.log('in saveRefreshToken (token: ' + token + ', clientId: ' + clientId +', userId: ' + userId + ', expires: ' + expires + ')');
 
   const refreshToken = new OAuthRefreshTokensModel({
     refreshToken: token,
@@ -119,8 +81,8 @@ model.saveRefreshToken = function (token, clientId, expires, userId, callback) {
   refreshToken.save(callback);
 };
 
-model.getRefreshToken = function (refreshToken, callback) {
-  console.log('in getRefreshToken (refreshToken: ' + refreshToken + ')');
+authModel.getRefreshToken = function (refreshToken, callback) {
+  // console.log('in getRefreshToken (refreshToken: ' + refreshToken + ')');
 
   OAuthRefreshTokensModel.findOne({ refreshToken: refreshToken }, callback);
 };
