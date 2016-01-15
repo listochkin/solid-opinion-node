@@ -23,6 +23,7 @@
     "mocha": "^2.3.4"
   },
   "dependencies": {
+    "body-parser": "^1.14.2",
     "co": "^4.6.0",
     "jsonapi-server": "^1.0.5",
     "node-fetch": "^1.3.3",
