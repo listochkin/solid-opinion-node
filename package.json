@@ -29,6 +29,7 @@
     "jsonapi-server": "^1.0.5",
     "mongoose": "^4.3.5",
     "node-fetch": "^1.3.3",
-    "oauth2-server": "^2.4.1"
+    "oauth2-server": "^2.4.1",
+    "request": "^2.67.0"
   }
 }
