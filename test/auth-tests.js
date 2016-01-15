@@ -5,6 +5,7 @@ const assert = chai.assert;
 
 const fetch = require('node-fetch');
 const co = require('co');
+const stringify = require('querystring').stringify;
 
 const auth = require('../src/auth');
 
@@ -14,7 +15,11 @@ describe('authentication', () => {
 
   it('should log in with username and password', co.wrap(function* () {
     const loginRes = yield fetch(rootUrl + '/oauth/token', {
-      method: 'POST'
+      method: 'POST',
+      body: stringify({
+        username: 'test-user',
+        password: 'secret'
+      })
     });
     assert.equal(loginRes.status, 200);
     assert.fail('not implemented');
