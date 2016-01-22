@@ -21,4 +21,12 @@ jsonApi.define({
   }]
 });
 
+jsonApi.listen = (port, callback) => {
+  jsonApi.setConfig({ port });
+  jsonApi.start();
+  if (callback) {
+    callback();
+  }
+};
+
 module.exports = jsonApi;

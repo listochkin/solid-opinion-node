@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node src/pm2-launcher",
     "test": "mocha test --recursive",
     "watch": "mocha test --recursive --watch --reporter=min --growl"
   },
@@ -30,6 +31,7 @@
     "mongoose": "^4.3.5",
     "node-fetch": "^1.3.3",
     "oauth2-server": "^2.4.1",
+    "pm2": "^1.0.0",
     "request": "^2.67.0"
   }
 }
