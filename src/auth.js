@@ -7,7 +7,8 @@ const oauthserver = require('oauth2-server');
 const request = require('request');
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test');
+const mongodbUrl = process.env.MONGODB_URL || 'mongodb://localhost/test';
+mongoose.connect(mongodbUrl);
 
 const authModel = require('./auth-model')
 

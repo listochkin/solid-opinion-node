@@ -2,9 +2,9 @@ const pm2 = require('pm2');
 
 const instances = process.env.WEB_CONCURRENCY || -1; // Set by Heroku or -1 to scale to max cpu core -1
 const maxMemory = process.env.WEB_MEMORY || 512;    // " " "
+const mongodbUrl = process.env.MONGODB_URL || 'mongodb://localhost/test';
 
 pm2.connect(function() {
-  // pm2.start();
   pm2.start([{
     script    : './src/server-launcher.js',
     name      : 'solid-opinion-auth',
@@ -14,13 +14,14 @@ pm2.connect(function() {
     max_memory_restart : maxMemory + 'M',
     env: {
       'APP_NAME': './auth',
-      'PORT': 3000
+      'PORT': 3000,
+      'MONGODB_URL' : mongodbUrl
     },
   }, {
     script: './src/server-launcher.js',
     name: 'solid-opinion-crud',
-    // exec_mode : 'cluster',
-    // node_args : '--abort_on_uncaught_exception --perf_basic_prof',
+    exec_mode : 'cluster',
+    node_args : '--abort_on_uncaught_exception --perf_basic_prof',
     instances : instances,
     max_memory_restart : maxMemory + 'M',
     env: {
