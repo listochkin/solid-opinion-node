@@ -1,0 +1,12 @@
+{
+  "default": {
+    "keySource": "kms",
+    "keySourceOpts": {
+      "region": "us-east-1",
+      "dataKey": "CiCbynnJHwlG/is2oQhv+3VSNYWmxQ1hgMUjYWZpVnQq3BKnAQEBAwB4m8p5yR8JRv4rNqEIb/t1UjWFpsUNYYDFI2FmaVZ0KtwAAAB+MHwGCSqGSIb3DQEHBqBvMG0CAQAwaAYJKoZIhvcNAQcBMB4GCWCGSAFlAwQBLjARBAyEI/XceQ5AB4vpbL4CARCAOzfhYJJqMomCqwlTW4Bn+jRavJO+JSlkKXnQa0NaY29IZjcvyaygncpImNsJ+Gq6myCb3DWKio1wIz/i"
+    },
+    "secrets": {
+      "mongodbUrl": "95k5CfW4mFPDsOKub1e6CjnrZvJmr00axUigNCDjf92Tl59SDsq+NYk8O+yhrSKRwTnMaSDSqTyuNYc/w54G8SpBPbu0fOQxBIfznoTWK7g="
+    }
+  }
+}
